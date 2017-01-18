@@ -1,0 +1,26 @@
+<!--
+  Generated template for the Polls page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Polls
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Polls view page</h3>
+  <button ion-item *ngFor="let poll of polls" (click)="goToDetails(poll.id)">
+      <h2>{{ poll.name }}</h2>
+      <button class="button button-positive">
+        <i class="icon ion-ios-telephone" (click)="removePoll(poll.id)"></i>
+      </button>
+    </button>
+</ion-content>
