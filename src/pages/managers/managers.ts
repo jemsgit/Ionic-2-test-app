@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Manager } from '../../models/manager';
-
+import { PopoverPage } from '../../pages/popover/popover';
+import { FormsModule } from '@angular/forms';
 /*
   Generated class for the Managers page.
 
@@ -13,14 +14,17 @@ import { Manager } from '../../models/manager';
   templateUrl: 'managers.html'
 })
 export class ManagersPage {
+  @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+  @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController) {}
-  managers: Manager[]
+  managers: Manager[];
+  editionMode: boolean = false;
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManagersPage');
     this.managers = [
-    {firstName: 'Bob', secondName:'Dylan', id: 1}, 
-    {firstName: 'Bob2', secondName:'Dylan2', id: 2}
+    {firstName: 'Bob', secondName:'Dylan', id: 1, selected: false}, 
+    {firstName: 'Bob2', secondName:'Dylan2', id: 2, selected: false}
     ]
   }
   

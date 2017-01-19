@@ -7,6 +7,8 @@ import { ListPage } from '../pages/list/list';
 import { ManagersPage } from '../pages/managers/managers';
 import { PollsPage } from '../pages/polls/polls';
 import { PollDetailsPage } from '../pages/poll-details/poll-details';
+import { PopoverPage } from '../pages/popover/popover';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,11 @@ import { PollDetailsPage } from '../pages/poll-details/poll-details';
     ListPage,
     ManagersPage,
     PollsPage,
-    PollDetailsPage
+    PollDetailsPage,
+    PopoverPage
   ],
   imports: [
+    FormsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -29,7 +33,8 @@ import { PollDetailsPage } from '../pages/poll-details/poll-details';
     ListPage,
     ManagersPage,
     PollsPage,
-    PollDetailsPage
+    PollDetailsPage,
+    PopoverPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
