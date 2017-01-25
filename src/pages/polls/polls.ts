@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ElementRef, ViewChild  } from '@angular/core';
+import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Poll } from '../../models/poll';
+import { PopoverPage } from '../../pages/popover/popover';
 import { PollDetailsPage } from '../poll-details/poll-details';
 
 /*
@@ -14,37 +15,66 @@ import { PollDetailsPage } from '../poll-details/poll-details';
   templateUrl: 'polls.html'
 })
 export class PollsPage {
+   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+  editMode: boolean = false;
+  deleteMode: boolean = false;
   polls: Poll[];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  selectedPolls: Poll[]
+  constructor(public navCtrl: NavController, private popoverCtrl: PopoverController, public navParams: NavParams) {
+    this.selectedPolls = [];
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PollsPage');
     this.polls = [
       {id: 1, name: '1sdfasdfasdfs', questions: [{ 
-        type: 'simple',
+        type: 'text',
         answer: ' ',
-        value: 'Как вы относитесь к бухачу?'
+        value: 'Как вы относитесь к бухачу?',
+        comment: ''
       }, { 
-        type: 'simple',
-        answer:'',
-        value: 'Как вы относитесь к бухачу2?'
+        type: 'radio',
+        answer:['1', '2'],
+        value: 'Как вы относитесь к бухачу2?',
+        comment: ''
       }]
     },
     {id: 2, name: '444sdfasdf', questions: [{ 
-        type: 'simple',
-        answer: ' ',
-        value: 'Как вы относитесь к бухачу3?'
+        type: 'multiselect',
+        answer: ['1', '2', '3'],
+        value: 'Как вы относитесь к бухачу3?',
+        comment: ''
       }, { 
-        type: 'simple',
-        answer:'',
-        value: 'Как вы относитесь к бухачу4?'
+        type: 'multiselect',
+        answer:['1', '2', '3', '4'],
+        value: 'Как вы относитесь к бухачу4?',
+        comment: ''
       }]
     }
-    ]
+    ];
+    
   }
 
-  goToDetails(id: number) {
+  goToPoll(id: number) {
     this.navCtrl.push(PollDetailsPage, {id});
+  }
+
+  setSelectMode(flag: boolean){
+    this.deleteMode = flag;
+    this.editMode = flag;
+  }
+
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverPage, {
+      contentEle: this.content.nativeElement,
+      pageType: 'poll'
+    });
+  
+
+    popover.present({
+      ev: ev
+    });
+
   }
 
 }

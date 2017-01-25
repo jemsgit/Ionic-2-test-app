@@ -9,18 +9,49 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-buttons end>
+    <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+      </ion-buttons>
     <ion-title>
       Polls
     </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> 
 
-<ion-content padding>
+<ion-content #popoverContent padding>
   <h3>Polls view page</h3>
-  <button ion-item *ngFor="let poll of polls" (click)="goToDetails(poll.id)">
-      <h2>{{ poll.name }}</h2>
-      <button class="button button-positive">
-        <i class="icon ion-ios-telephone" (click)="removePoll(poll.id)"></i>
+  <div [hidden]= 'editMode || deleteMode'>
+    <button ion-button color="light" (click)="createNewPoll()" >Add New Poll</button>
+  </div>
+  <input id = "editMode" type="checkbox" [(ngModel)] = 'editMode' [hidden] = "true"/>
+  <input id = "deleteMode" type="checkbox" [(ngModel)] = 'deleteMode' [hidden] = "true"/>
+  <div #popoverText class="text-to-change"></div>
+  <div *ngIf="!deleteMode">
+    <button ion-item *ngFor="let poll of polls" (click)="goToPoll(poll.id)">
+      <ion-label>
+        {{ poll.name }}
+      </ion-label>
+      <button ion-button class="button button-positive" [hidden]='!editMode' item-right>
+        <i class="icon ion-ios-telephone" (click)="editPoll(poll.id)">Edit</i>
       </button>
     </button>
+    
+  </div>
+  <div *ngIf="deleteMode"> 
+    <div ion-item *ngFor="let poll of polls">
+      <ion-label>{{ poll.name }}</ion-label>
+      <ion-checkbox [(ngModel)]="poll.selected" (ngModelChange) = "changeSelected(poll)"></ion-checkbox>
+    </div>
+  </div>
+  
+  <div [hidden]= '!deleteMode'>
+  <button ion-button color="light" (click)="deleteManagers()" [disabled]="selectedPolls.length == 0">Delete</button>
+  </div>
+  <div [hidden]= '!deleteMode && !editMode'>
+  <button ion-button color="light" (click)="setSelectMode(false)">Cancel</button>
+  </div>
+
+
 </ion-content>

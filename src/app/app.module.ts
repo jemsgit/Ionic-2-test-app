@@ -8,6 +8,7 @@ import { ManagersPage } from '../pages/managers/managers';
 import { PollsPage } from '../pages/polls/polls';
 import { PollDetailsPage } from '../pages/poll-details/poll-details';
 import { PopoverPage } from '../pages/popover/popover';
+import { ManagerNewPage } from '../pages/manager-new/manager-new';
 import { FormsModule }   from '@angular/forms';
 
 @NgModule({
@@ -19,11 +20,12 @@ import { FormsModule }   from '@angular/forms';
     ManagersPage,
     PollsPage,
     PollDetailsPage,
-    PopoverPage
+    PopoverPage,
+    ManagerNewPage
   ],
   imports: [
-    FormsModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +36,8 @@ import { FormsModule }   from '@angular/forms';
     ManagersPage,
     PollsPage,
     PollDetailsPage,
-    PopoverPage
+    PopoverPage,
+    ManagerNewPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

@@ -1,8 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ViewController } from 'ionic-angular';
 import { Manager } from '../../models/manager';
 import { PopoverPage } from '../../pages/popover/popover';
-import { FormsModule } from '@angular/forms';
+import { ManagerNewPage } from '../manager-new/manager-new';
+import * as _ from 'lodash'
 /*
   Generated class for the Managers page.
 
@@ -17,27 +18,59 @@ export class ManagersPage {
   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public viewCtrl: ViewController) {
+    this.deleteMode = true;
+    this.selectedManagers = [];
+  }
   managers: Manager[];
-  editionMode: boolean = false;
+  deleteMode: boolean = false;
+  selectedManagers: Manager[];
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManagersPage');
     this.managers = [
-    {firstName: 'Bob', secondName:'Dylan', id: 1, selected: false}, 
-    {firstName: 'Bob2', secondName:'Dylan2', id: 2, selected: false}
+      {firstName: 'Bob', secondName:'Dylan', id: 1, selected: false}, 
+      {firstName: 'Bob2', secondName:'Dylan2', id: 2, selected: false}
     ]
+    
   }
   
-  presentPopover(ev) {
+  setSelectMode(flag: boolean){
+    this.deleteMode = flag;
+  }
 
+  onChange(){
+    console.log(1)
+  }
+
+  changeSelected(manager: Manager){
+    if(manager.selected){
+        this.selectedManagers.push(manager)
+    } else {
+      this.selectedManagers = _.difference(this.selectedManagers, [manager])
+    }
+    
+  }
+
+  deleteManagers(){
+    this.managers = _.difference(this.managers, this.selectedManagers)
+    this.setSelectMode(false)
+  }
+
+  createNewManager(){
+    this.navCtrl.push(ManagerNewPage);
+  }
+
+  presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPage, {
       contentEle: this.content.nativeElement,
-      textEle: this.text.nativeElement
+      pageType: 'managers'
     });
 
     popover.present({
       ev: ev
     });
+
   }
 
 

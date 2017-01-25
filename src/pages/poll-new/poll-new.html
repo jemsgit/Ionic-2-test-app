@@ -1,0 +1,47 @@
+<!--
+  Generated template for the PollNew page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>poll-new</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form #pollForm = "ngForm" (ngSubmit)="savePollResult()">
+    <ion-item>
+      <ion-label color="primary" floating>Floating Label</ion-label>
+      <ion-input [(ngModel)] = "pollModel.name" name = "pollName"></ion-input>
+    </ion-item>
+    <button ion-button color="secondary" (click)="addQuestion()">Add Question</button>
+    <div *ngFor="let question of pollModel.questions; let i = index">
+       <ion-item>
+        <ion-label color="primary" floating>{{ Question }}</ion-label>
+        <ion-input [(ngModel)]="question.value" name="title"></ion-input>
+      </ion-item >
+    
+    <ion-item>
+      <ion-label>Question type</ion-label>
+        <ion-select [(ngModel)]="question.type" name="type">
+          <ion-option *ngFor="let type of questionTypes">{{type.title}} </ion-option>
+        </ion-select>
+    </ion-item>
+
+    <div *ngIf="question.type !== 'text'">
+      <div *ngFor="let answer of question.answer; let i = index">
+       <ion-item>
+        <ion-label color="primary" floating>variant {{ i }}</ion-label>
+        <ion-input [(ngModel)]="answer.value" name="title"></ion-input>
+      </ion-item >
+      </div>
+      <button ion-button color="secondary" (click)="addAnswer()">Add Answer</button>
+  
+    </div>
+  </form>
+</ion-content>i

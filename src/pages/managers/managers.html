@@ -22,13 +22,25 @@
 
 <ion-content #popoverContent padding>
   <h3>Managers view page</h3>
-  <div #popoverText class="text-to-change"></div>
-  <div ion-item *ngFor="let manager of managers">
-      <ion-label>{{ manager.firstName + ' ' + manager.secondName }}</ion-label>
-      <button color="dark" [(ng-model)]="manager.selected"></button>
+  <div [hidden]= '!deleteMode'>
+  <button ion-button color="light" (click)="createNewManager()" >Add New Manager</button>
   </div>
-  <div [hidden]= true>
-  <button ion-button color="light">Delete</button>
-  <button ion-button color="light">Cancel</button>
+  <input id = "deleteMode" type="checkbox" [(ngModel)] = 'deleteMode' [hidden] = "true"/>
+  <div #popoverText class="text-to-change"></div>
+  <div *ngIf="deleteMode"> 
+    <button ion-item *ngFor="let manager of managers">
+      <ion-label>{{ manager.firstName + ' ' + manager.secondName }}</ion-label>
+    </button>
+  </div>
+  <div *ngIf="!deleteMode"> 
+    <div ion-item *ngFor="let manager of managers">
+      <ion-label>{{ manager.firstName + ' ' + manager.secondName }}</ion-label>
+      <ion-checkbox [(ngModel)]="manager.selected" (ngModelChange) = "changeSelected(manager)"></ion-checkbox>
+    </div>
+  </div>
+  
+  <div [hidden]= 'deleteMode'>
+  <button ion-button color="light" (click)="deleteManagers()" [disabled]="selectedManagers.length == 0">Delete</button>
+  <button ion-button color="light" (click)="setSelectMode(true)">Cancel</button>
   </div>
 </ion-content>

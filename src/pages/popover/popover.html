@@ -5,7 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-list radio-group [(ngModel)]="fontFamily" class="popover-page">
+    <div *ngIf="pageType === 'poll'">
       <ion-item class="text-athelas">
-        <ion-label (click)="setSelectionList()">Remove</ion-label>
+        <ion-label (click)="setSelectionMode('remove')">Remove</ion-label>
       </ion-item>
+      <ion-item class="text-athelas">
+        <ion-label (click)="setSelectionMode('edit')">Edit</ion-label>
+      </ion-item>
+    </div>
+    <div *ngIf="pageType === 'manager'">
+      <ion-item class="text-athelas">
+        <ion-label (click)="setSelectionMode('remove')">Remove</ion-label>
+      </ion-item>
+    </div>
     </ion-list> 

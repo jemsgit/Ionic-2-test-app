@@ -1,5 +1,4 @@
-export interface Question{
-    type: string;
+export interface Answer{
     value: string;
     answer: any;
     comment: string;
