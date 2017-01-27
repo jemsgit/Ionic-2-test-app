@@ -14,34 +14,36 @@
 
 
 <ion-content padding>
-  <form #pollForm = "ngForm" (ngSubmit)="savePollResult()">
+  <form #pollForm = "ngForm" (ngSubmit)="savePollResult()" >
     <ion-item>
       <ion-label color="primary" floating>Floating Label</ion-label>
       <ion-input [(ngModel)] = "pollModel.name" name = "pollName"></ion-input>
     </ion-item>
-    <button ion-button color="secondary" (click)="addQuestion()">Add Question</button>
+    <button ion-button color="secondary" (click)="addQuestion($event)">Add Question</button>
     <div *ngFor="let question of pollModel.questions; let i = index">
+      <button ion-button color="secondary" (click)="removeQuestion($event, i)">Delete Question</button>
        <ion-item>
-        <ion-label color="primary" floating>{{ Question }}</ion-label>
-        <ion-input [(ngModel)]="question.value" name="title"></ion-input>
+        <ion-label color="primary" floating> Question </ion-label>
+        <ion-input [(ngModel)]="question.value" name= "{{'title' + i}}" ></ion-input>
       </ion-item >
     
     <ion-item>
       <ion-label>Question type</ion-label>
-        <ion-select [(ngModel)]="question.type" name="type">
-          <ion-option *ngFor="let type of questionTypes">{{type.title}} </ion-option>
+        <ion-select [(ngModel)]="question.type" (ngModelChange)="changeQuestionType(event, question, i)" name="{{'type' + i}}">
+          <ion-option *ngFor="let type of questionTypes" [value] ="type.value">{{type.title}} </ion-option>
         </ion-select>
     </ion-item>
 
     <div *ngIf="question.type !== 'text'">
       <div *ngFor="let answer of question.answer; let i = index">
+        <button ion-button color="secondary" (click)="removeAnswer($event, i)">Delete Answer</button>
        <ion-item>
-        <ion-label color="primary" floating>variant {{ i }}</ion-label>
-        <ion-input [(ngModel)]="answer.value" name="title"></ion-input>
+        <ion-label color="primary" floating>variant {{ i + 1 }}</ion-label>
+        <ion-input [(ngModel)]="question.answer[i]" name="{{'answer' + i}}"></ion-input>
       </ion-item >
       </div>
-      <button ion-button color="secondary" (click)="addAnswer()">Add Answer</button>
-  
+      <button ion-button [disabled]="!question.type || question.type.value === 'text'" color="secondary" (click)="addAnswer($event, i)">Add Answer</button>
+  </div>
     </div>
   </form>
 </ion-content>i

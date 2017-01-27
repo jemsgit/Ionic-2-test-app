@@ -33,8 +33,8 @@
       <ion-label>
         {{ poll.name }}
       </ion-label>
-      <button ion-button class="button button-positive" [hidden]='!editMode' item-right>
-        <i class="icon ion-ios-telephone" (click)="editPoll(poll.id)">Edit</i>
+      <button ion-button class="button button-positive" [hidden]='!editMode' item-right >
+        <i class="icon ion-ios-telephone" (click)="editPoll($event, poll.id)">Edit</i>
       </button>
     </button>
     

@@ -3,6 +3,7 @@ import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Poll } from '../../models/poll';
 import { PopoverPage } from '../../pages/popover/popover';
 import { PollDetailsPage } from '../poll-details/poll-details';
+import { PollNewPage } from '../poll-new/poll-new';
 
 /*
   Generated class for the Polls page.
@@ -57,6 +58,17 @@ export class PollsPage {
 
   goToPoll(id: number) {
     this.navCtrl.push(PollDetailsPage, {id});
+    
+  }
+
+  editPoll(event, id: number){
+    event.stopPropagation();
+    this.navCtrl.push(PollNewPage, {id});
+    return false;
+  }
+  
+  createNewPoll(){
+    this.navCtrl.push(PollNewPage)
   }
 
   setSelectMode(flag: boolean){
