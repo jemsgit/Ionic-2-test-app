@@ -15,43 +15,56 @@
       </button>
       </ion-buttons>
     <ion-title>
-      Polls
+      Опросы
     </ion-title>
   </ion-navbar>
 </ion-header> 
 
 <ion-content #popoverContent padding>
-  <h3>Polls view page</h3>
-  <div [hidden]= 'editMode || deleteMode'>
-    <button ion-button color="light" (click)="createNewPoll()" >Add New Poll</button>
+  <h3>Список опросов</h3>
+  
+  
+  <div >
+    <button ion-button icon-left [hidden]= 'editMode || deleteMode' 
+          (click)="createNewPoll()" 
+          class="control-button">
+          <ion-icon name="add-circle"></ion-icon>Добавить
+    </button>
   </div>
-  <input id = "editMode" type="checkbox" [(ngModel)] = 'editMode' [hidden] = "true"/>
-  <input id = "deleteMode" type="checkbox" [(ngModel)] = 'deleteMode' [hidden] = "true"/>
-  <div #popoverText class="text-to-change"></div>
+
+  <div *ngIf="polls.length === 0">
+    <p>Здесь пока пусто. Создайте опрос, нажав кнопку "Добавить"</p>
+  </div>
+
+  <input id = "editMode" type="checkbox" [(ngModel)] = 'editMode' (ngModelChange) = "changeMode('editMode')" [hidden] = "true"/>
+  <input id = "deleteMode" type="checkbox" [(ngModel)] = 'deleteMode' (ngModelChange) = "changeMode('deleteMode')" [hidden] = "true"/>
+
   <div *ngIf="!deleteMode">
-    <button ion-item *ngFor="let poll of polls" (click)="goToPoll(poll.id)">
-      <ion-label>
+    <ion-item ion-item *ngFor="let poll of polls" >
+      <ion-label (click)="goToPoll(poll.id)">
         {{ poll.name }}
       </ion-label>
-      <button ion-button class="button button-positive" [hidden]='!editMode' item-right >
-        <i class="icon ion-ios-telephone" (click)="editPoll($event, poll.id)">Edit</i>
+      <button large ion-button class="button button-positive" [hidden]='!editMode' item-right (click)="editPoll($event, poll.id)">
+        <ion-icon name="create" ></ion-icon>
       </button>
-    </button>
+    </ion-item>
     
   </div>
   <div *ngIf="deleteMode"> 
     <div ion-item *ngFor="let poll of polls">
       <ion-label>{{ poll.name }}</ion-label>
-      <ion-checkbox [(ngModel)]="poll.selected" (ngModelChange) = "changeSelected(poll)"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="selectedPolls[poll.id]" (ngModelChange) = "changeSelected(i)"></ion-checkbox>
     </div>
   </div>
   
-  <div [hidden]= '!deleteMode'>
-  <button ion-button color="light" (click)="deleteManagers()" [disabled]="selectedPolls.length == 0">Delete</button>
-  </div>
-  <div [hidden]= '!deleteMode && !editMode'>
-  <button ion-button color="light" (click)="setSelectMode(false)">Cancel</button>
-  </div>
+    <button ion-button outline [hidden] = '!deleteMode' 
+          (click)="deleteManagers()" 
+          [disabled]="selectedPolls.length == 0" 
+          color="danger"
+          class="control-button">Удалить</button>
+    <button ion-button outline [hidden]= '!deleteMode && !editMode'
+          (click)="setSelectMode(false)" 
+          class="control-button">Отмена</button>
 
 
 </ion-content>

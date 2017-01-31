@@ -20,8 +20,9 @@ export class PollsPage {
   editMode: boolean = false;
   deleteMode: boolean = false;
   polls: Poll[];
-  selectedPolls: Poll[]
+  selectedPolls;
   constructor(public navCtrl: NavController, private popoverCtrl: PopoverController, public navParams: NavParams) {
+    this.polls = [];
     this.selectedPolls = [];
   }
 
@@ -53,6 +54,7 @@ export class PollsPage {
       }]
     }
     ];
+
     
   }
 
@@ -60,7 +62,13 @@ export class PollsPage {
     this.navCtrl.push(PollDetailsPage, {id});
     
   }
-
+  changeMode(mode: string){
+    if(mode === 'editMode'){
+      this.deleteMode = false;
+    } else{
+      this.editMode = false;
+    }
+  }
   editPoll(event, id: number){
     event.stopPropagation();
     this.navCtrl.push(PollNewPage, {id});
@@ -74,6 +82,11 @@ export class PollsPage {
   setSelectMode(flag: boolean){
     this.deleteMode = flag;
     this.editMode = flag;
+  }
+
+  changeSelected(i: number){
+
+    
   }
 
   presentPopover(ev) {

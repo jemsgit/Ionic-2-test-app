@@ -15,18 +15,29 @@
       </button>
       </ion-buttons>
     <ion-title>
-      Managers
+      Менеджеры
     </ion-title>
   </ion-navbar>
 </ion-header> 
 
 <ion-content #popoverContent padding>
-  <h3>Managers view page</h3>
-  <div [hidden]= '!deleteMode'>
-  <button ion-button color="light" (click)="createNewManager()" >Add New Manager</button>
+  <h3>Список менеджеров</h3>
+
+  <div >
+    <button ion-button icon-left [hidden]= '!deleteMode'
+          (click)="createNewManager()"
+          class="control-button">
+          <ion-icon name="add-circle"></ion-icon>Добавить
+    </button>
   </div>
+
+  <div *ngIf="managers.length === 0">
+    <p>Здесь пока пусто. Добавьте менеджеров, нажав кнопку "Добавить"</p>
+  </div>
+
+
   <input id = "deleteMode" type="checkbox" [(ngModel)] = 'deleteMode' [hidden] = "true"/>
-  <div #popoverText class="text-to-change"></div>
+
   <div *ngIf="deleteMode"> 
     <button ion-item *ngFor="let manager of managers">
       <ion-label>{{ manager.firstName + ' ' + manager.secondName }}</ion-label>
@@ -40,7 +51,11 @@
   </div>
   
   <div [hidden]= 'deleteMode'>
-  <button ion-button color="light" (click)="deleteManagers()" [disabled]="selectedManagers.length == 0">Delete</button>
-  <button ion-button color="light" (click)="setSelectMode(true)">Cancel</button>
+  <button ion-button outline (click)="deleteManagers()"
+          class="control-button"
+          color="danger"
+          [disabled]="selectedManagers.length == 0">Удалить</button>
+  <button ion-button outline (click)="setSelectMode(true)"
+          class="control-button">Отмена</button>
   </div>
 </ion-content>

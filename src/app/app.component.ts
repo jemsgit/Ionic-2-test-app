@@ -4,10 +4,10 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { ManagersPage } from '../pages/managers/managers';
 import { PollsPage } from '../pages/polls/polls';
+import { LoadingPagePage } from '../pages/loading-page/loading-page';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = PollsPage;
+  rootPage: any = LoadingPagePage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -27,8 +27,8 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Managers', component: ManagersPage },
-      { title: 'Polls', component: PollsPage }
+      { title: 'Менеджеры', component: ManagersPage },
+      { title: 'Опросы', component: PollsPage }
     ];
   }
 

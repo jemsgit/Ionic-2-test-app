@@ -7,43 +7,85 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>poll-new</ion-title>
+    <ion-title *ngIf="action === 'new'">Новый опрос</ion-title>
+    <ion-title *ngIf="action === 'edit'">Редактирование</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <form #pollForm = "ngForm" (ngSubmit)="savePollResult()" >
+  <form #pollForm = "ngForm" (ngSubmit)="savePollResult()" name='pollForm'>
     <ion-item>
-      <ion-label color="primary" floating>Floating Label</ion-label>
-      <ion-input [(ngModel)] = "pollModel.name" name = "pollName"></ion-input>
+      <ion-label stacked color="primary">Название опроса</ion-label>
+      <ion-input [(ngModel)] = "pollModel.name" 
+                  name = "pollName"
+                  required minlength="2"></ion-input>
     </ion-item>
-    <button ion-button color="secondary" (click)="addQuestion($event)">Add Question</button>
-    <div *ngFor="let question of pollModel.questions; let i = index">
-      <button ion-button color="secondary" (click)="removeQuestion($event, i)">Delete Question</button>
+    <div *ngFor="let question of pollModel.questions; let index = index">
+      <ion-card>
+        
+      <button ion-button outline 
+      item-right
+      color="danger" 
+      (click)="removeQuestion($event, i)"
+      class="control-button">Удалить</button>
        <ion-item>
-        <ion-label color="primary" floating> Question </ion-label>
-        <ion-input [(ngModel)]="question.value" name= "{{'title' + i}}" ></ion-input>
+        <ion-label stacked color="primary"> Вопрос {{ index + 1 }}</ion-label>
+        <ion-input [(ngModel)]="question.value" 
+                    name= "{{'title' + i}}"
+                    required minlength="2" ></ion-input>
       </ion-item >
-    
-    <ion-item>
-      <ion-label>Question type</ion-label>
-        <ion-select [(ngModel)]="question.type" (ngModelChange)="changeQuestionType(event, question, i)" name="{{'type' + i}}">
+          
+    <ion-item class="question-type">
+      <ion-label color="primary">Тип вопроса</ion-label>
+
+        <ion-select [(ngModel)]="question.type" 
+        required (ngModelChange)="changeQuestionType(event, question, i)" 
+        name="{{'type' + i}}">
+
           <ion-option *ngFor="let type of questionTypes" [value] ="type.value">{{type.title}} </ion-option>
+
         </ion-select>
     </ion-item>
 
     <div *ngIf="question.type !== 'text'">
       <div *ngFor="let answer of question.answer; let i = index">
-        <button ion-button color="secondary" (click)="removeAnswer($event, i)">Delete Answer</button>
        <ion-item>
-        <ion-label color="primary" floating>variant {{ i + 1 }}</ion-label>
-        <ion-input [(ngModel)]="question.answer[i]" name="{{'answer' + i}}"></ion-input>
+        <ion-label color="primary" stacked>Ответ {{ i + 1 }}</ion-label>
+        <ion-input [(ngModel)]="question.answer[i]"  name="{{'answer' + i}}"></ion-input>
+        <button ion-button outline color="danger" (click)="removeAnswer($event, i)" item-right>
+          <ion-icon name="close"></ion-icon>
+        </button>
       </ion-item >
       </div>
-      <button ion-button [disabled]="!question.type || question.type.value === 'text'" color="secondary" (click)="addAnswer($event, i)">Add Answer</button>
+      <button ion-button outline 
+      [disabled]="!question.type || question.type.value === 'text'" 
+      color="secondary" 
+      (click)="addAnswer($event, i)"
+      class="control-button">
+      <ion-icon name="add-circle"></ion-icon>
+      </button>
   </div>
+  </ion-card>
     </div>
+    <button ion-button 
+    icon-left 
+    color="secondary"
+    class = "control-button"
+    outline
+    (click)="addQuestion($event)"><ion-icon name="add-circle"></ion-icon> Добавть вопрос</button>
+
+      <button *ngIf="action === 'new'" ion-button  
+      class = "control-button" 
+      [disabled]="!pollForm.valid" 
+      color="secondary" 
+      (click)="savePoll($event, pollForm)">Добавить опрос</button>
+
+      <button *ngIf="action === 'edit'" ion-button  
+      class = "control-button" 
+      [disabled]="!pollForm.valid" 
+      color="secondary" 
+      (click)="savePoll($event, pollForm)">Сохранить опрос</button>
   </form>
 </ion-content>i

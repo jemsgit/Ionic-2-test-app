@@ -6,54 +6,59 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{poll.id}}'s details</ion-title>
+    <ion-title>Опрос {{poll.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding >
-  <h3>{{poll.name}}</h3>
+  <h3>Опрос: {{poll.name}}</h3>
 
   <form #pollForm = "ngForm" (ngSubmit)="savePollResult()">
   <div *ngFor="let question of poll.questions; let i = index">
+    <ion-card>
     <div *ngIf="question.type === 'text'">
-      <ion-item>
-        <ion-label color="primary" floating>{{ pollResult.answers[i].value }}</ion-label>
-        <ion-input [(ngModel)]="pollResult.answers[i].answer" name="answer1"></ion-input>
+       <ion-item>
+        <ion-label stacked color="primary">{{ pollResult.answers[i].value }}</ion-label>
+        <ion-input [(ngModel)]="pollResult.answers[i].answer" name="{{'answer' + i}}" required minlength="2" ></ion-input>
       </ion-item >
+
       <ion-item >
-        <ion-label color="primary" floating>Comment</ion-label>
-        <ion-input  [(ngModel)]="pollResult.answers[i].comment" name="comment"></ion-input>
+        <ion-label stacked color="primary" >Comment</ion-label>
+        <ion-input  [(ngModel)]="pollResult.answers[i].comment" name="{{'cmment' + i}}" required minlength="2"></ion-input>
       </ion-item>
     </div>
       <div *ngIf="question.type === 'radio'">
         <ion-list radio-group [(ngModel)]="pollResult.answers[i].answer"  name="answer2">
           <ion-list-header>
-            {{pollResult.answers[i].value}}
+            <ion-label stacked color="primary" >{{pollResult.answers[i].value}}</ion-label>
           </ion-list-header>
           <ion-item *ngFor="let answer of question.answer; let i = index">
-              <ion-label>{{answer}}</ion-label>
+              <ion-label stacked>{{answer}}</ion-label>
               <ion-radio [value]="answer" checked></ion-radio>
           </ion-item>
         </ion-list>
         <ion-item >
-        <ion-label color="primary" floating>Comment</ion-label>
+        <ion-label color="primary" stacked>Комментарий</ion-label>
         <ion-input  [(ngModel)]="pollResult.answers[i].comment" name="comment"></ion-input>
       </ion-item>
       </div>
 
       <div *ngIf="question.type === 'multiselect'">
         <ion-list>
-          {{pollResult.answers[i].value}}
+          <ion-list-header>
+          <ion-label stacked color="primary" >{{pollResult.answers[i].value}}</ion-label>
+          </ion-list-header>
           <ion-item *ngFor="let answer of pollResult.answers[i].answer; ">
-              <ion-label>{{answer.title}}</ion-label>
+              <ion-label stacked>{{answer.title}}</ion-label>
               <ion-checkbox [(ngModel)]="answer.value" name="multians1"></ion-checkbox>
           </ion-item>
         </ion-list>
         <ion-item >
-        <ion-label color="primary" floating>Comment</ion-label>
+        <ion-label color="primary" stacked>Комментарий</ion-label>
         <ion-input  [(ngModel)]="pollResult.answers[i].comment" name="comment"></ion-input>
       </ion-item>
       </div>
+      </ion-card>
    </div>
  <button ion-button type="submit">Save Result</button>
 </form>

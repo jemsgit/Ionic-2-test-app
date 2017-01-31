@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>manager-new</ion-title>
+    <ion-title>Новый менеджер</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,19 +16,19 @@
 <ion-content padding>
   <form #managerForm = "ngForm" (ngSubmit)="addManager()" name="managerForm">
   <ion-item>
-  <ion-label color="primary" floating>Name (min 2 characters)</ion-label>
+  <ion-label color="primary" stacked>Имя (min 2)</ion-label>
   <ion-input type="text" id="firstName" class="form-control"
        required minlength="2" maxlength="100"
        name="firstName" [(ngModel)]="firstName"></ion-input>
  </ion-item>
 
  <ion-item>
-  <ion-label color="primary" floating>Second Name (min 2 characters)</ion-label>
+  <ion-label color="primary" stacked>Фамилия</ion-label>
   <ion-input type="text" id="secondName" class="form-control"
        required minlength="2" maxlength="100"
        name="secondName" [(ngModel)]="secondName"></ion-input>
  </ion-item>
- <button ion-button type="submit" [disabled] = "!managerForm.valid" >Add Manager</button>
+ <button ion-button outline class = "control-button" type="submit" [disabled] = "!managerForm.valid" >Добавить</button>
 </form>
 
 </ion-content>

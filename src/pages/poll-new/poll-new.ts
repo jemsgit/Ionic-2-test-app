@@ -15,9 +15,10 @@ import { Poll } from '../../models/poll';
 export class PollNewPage {
   pollModel: any;
   questionTypes: any;
-  stas: any
+  action: string;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     if(navParams.data.id !== null){
+      this.action = 'edit';
       this.pollModel = {id: 1, name: '1sdfasdfasdfs', questions: [{ 
         type: 'text',
         answer: ' ',
@@ -41,6 +42,7 @@ export class PollNewPage {
       }]
     }
     } else{
+      this.action = 'new'
         this.pollModel = {
         id: '3',
         name: '',
@@ -75,5 +77,10 @@ export class PollNewPage {
     event.preventDefault();
     this.pollModel.questions[i].answer.push('');
     
+  }
+
+  savePoll(event, pollForm: any){
+    event.preventDefault();
+    console.log(pollForm)
   }
 }

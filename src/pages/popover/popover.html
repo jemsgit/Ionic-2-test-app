@@ -7,15 +7,15 @@
 <ion-list radio-group [(ngModel)]="fontFamily" class="popover-page">
     <div *ngIf="pageType === 'poll'">
       <ion-item class="text-athelas">
-        <ion-label (click)="setSelectionMode('remove')">Remove</ion-label>
+        <ion-label (click)="setSelectionMode('remove')">Удалить</ion-label>
       </ion-item>
       <ion-item class="text-athelas">
-        <ion-label (click)="setSelectionMode('edit')">Edit</ion-label>
+        <ion-label (click)="setSelectionMode('edit')">Редактировать</ion-label>
       </ion-item>
     </div>
-    <div *ngIf="pageType === 'manager'">
+    <div *ngIf="pageType === 'managers'">
       <ion-item class="text-athelas">
-        <ion-label (click)="setSelectionMode('remove')">Remove</ion-label>
+        <ion-label (click)="setSelectionMode('remove')">Удалить</ion-label>
       </ion-item>
     </div>
     </ion-list> 

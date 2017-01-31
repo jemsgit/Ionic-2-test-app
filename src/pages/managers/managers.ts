@@ -21,6 +21,7 @@ export class ManagersPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public viewCtrl: ViewController) {
     this.deleteMode = true;
     this.selectedManagers = [];
+    this.managers = []
   }
   managers: Manager[];
   deleteMode: boolean = false;
@@ -39,9 +40,6 @@ export class ManagersPage {
     this.deleteMode = flag;
   }
 
-  onChange(){
-    console.log(1)
-  }
 
   changeSelected(manager: Manager){
     if(manager.selected){
