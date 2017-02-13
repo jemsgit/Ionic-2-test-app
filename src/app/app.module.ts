@@ -12,6 +12,17 @@ import { PopoverPage } from '../pages/popover/popover';
 import { ManagerNewPage } from '../pages/manager-new/manager-new';
 import { LoadingPagePage } from '../pages/loading-page/loading-page';
 import { FormsModule }   from '@angular/forms';
+// Import the AF2 Module
+import { AngularFireModule } from 'angularfire2';
+ 
+// AF2 Settings
+export const firebaseConfig = {
+    apiKey: "AIzaSyCnq2Ti-QyF8FpMgaWvrtsyON00aeBao8I",
+    authDomain: "auchan-polls-app.firebaseapp.com",
+    databaseURL: "https://auchan-polls-app.firebaseio.com",
+    storageBucket: "auchan-polls-app.appspot.com",
+    messagingSenderId: "929594316626"
+  };
 
 @NgModule({
   declarations: [
@@ -28,7 +39,8 @@ import { FormsModule }   from '@angular/forms';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
