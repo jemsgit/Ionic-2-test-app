@@ -3,7 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Poll } from '../../models/poll';
 import { Answer } from '../../models/answer';
 import { PollResult } from '../../models/poll-result';
+import {DataService} from '../../providers/data-service';
 import * as _ from 'lodash'
+import { uuidV1 } from 'uuid'; 
 /*
   Generated class for the PollDetails page.
 
@@ -17,32 +19,14 @@ import * as _ from 'lodash'
 export class PollDetailsPage {
   poll: Poll;
   pollResult: PollResult;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.poll = {id: 1, name: '1sdfasdfasdfs', questions: [{ 
-        type: 'text',
-        answer: ' ',
-        value: 'Как вы относитесь к бухачу?',
-        comment: ''
-      }, { 
-        type: 'radio',
-        answer:['1', '2'],
-        value: 'Как вы относитесь к бухачу2?',
-        comment: ''
-      }, { 
-        type: 'multiselect',
-        answer:['1', '2'],
-        value: 'Как вы относитесь к бухачу2?',
-        comment: ''
-      }, { 
-        type: 'multiselect',
-        answer: ['1', '2', '3'],
-        value: 'Как вы относитесь к бухачу3?',
-        comment: ''
-      }]
-    }
+  managers: any
+  activeManager: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,  private dataService: DataService) {
 
+    this.poll = dataService.getPollById(navParams.data.id);
+    this.managers = dataService.getManagers();
     this.pollResult = {
-      id:1, name: '1sdfasdfasdfs', answers: []
+      id:1, name: this.poll.name, answers: [], manager: null
     }
 
     let that = this;
@@ -65,6 +49,9 @@ export class PollDetailsPage {
     console.log(this.pollResult.answers)
   }
 
-  
+  savePollResults(){
+    this.pollResult.manager = this.activeManager;
+    this.dataService.savePollResult(this.pollResult);
+  }
   
 }

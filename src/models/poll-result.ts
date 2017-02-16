@@ -3,4 +3,5 @@ export interface PollResult{
     answers: Array<Answer>;
     name: string;
     id: number;
+    manager: any;
 }

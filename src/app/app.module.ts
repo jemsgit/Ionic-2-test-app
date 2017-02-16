@@ -14,6 +14,7 @@ import { LoadingPagePage } from '../pages/loading-page/loading-page';
 import { FormsModule }   from '@angular/forms';
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
+import { DataService } from '../providers/data-service';
  
 // AF2 Settings
 export const firebaseConfig = {
@@ -55,6 +56,6 @@ export const firebaseConfig = {
     PollNewPage,
     LoadingPagePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [DataService ,{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

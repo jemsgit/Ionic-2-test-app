@@ -13,6 +13,16 @@
 <ion-content padding >
   <h3>Опрос: {{poll.name}}</h3>
 
+  <ion-list radio-group [(ngModel)]="activeManager"  name="manager">
+          <ion-list-header>
+            <ion-label stacked color="primary" >Менеджер</ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let manager of managers; let i = index">
+              <ion-label stacked>{{manager.name + manager.surname}}</ion-label>
+              <ion-radio [value]="manager" checked></ion-radio>
+          </ion-item>
+        </ion-list>
+
   <form #pollForm = "ngForm" (ngSubmit)="savePollResult()">
   <div *ngFor="let question of poll.questions; let i = index">
     <ion-card>
@@ -60,7 +70,7 @@
       </div>
       </ion-card>
    </div>
- <button ion-button type="submit">Save Result</button>
+ <button ion-button type="submit" (click)="savePollResults()">Save Result</button>
 </form>
 
 </ion-content>

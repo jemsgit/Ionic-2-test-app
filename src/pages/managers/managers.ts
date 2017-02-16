@@ -4,6 +4,7 @@ import { Manager } from '../../models/manager';
 import { PopoverPage } from '../../pages/popover/popover';
 import { ManagerNewPage } from '../manager-new/manager-new';
 import * as _ from 'lodash'
+import {DataService} from '../../providers/data-service';
 /*
   Generated class for the Managers page.
 
@@ -18,7 +19,7 @@ export class ManagersPage {
   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController, public viewCtrl: ViewController, private dataService: DataService) {
     this.deleteMode = true;
     this.selectedManagers = [];
     this.managers = []
@@ -29,33 +30,30 @@ export class ManagersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManagersPage');
-    this.managers = [
-      {firstName: 'Bob', secondName:'Dylan', id: 1, selected: false}, 
-      {firstName: 'Bob2', secondName:'Dylan2', id: 2, selected: false}
-    ]
-    
+    this.managers = this.dataService.getManagers()
+
   }
-  
-  setSelectMode(flag: boolean){
+
+  setSelectMode(flag: boolean) {
     this.deleteMode = flag;
   }
 
 
-  changeSelected(manager: Manager){
-    if(manager.selected){
-        this.selectedManagers.push(manager)
+  changeSelected(manager: Manager) {
+    if (manager.selected) {
+      this.selectedManagers.push(manager)
     } else {
       this.selectedManagers = _.difference(this.selectedManagers, [manager])
     }
-    
+
   }
 
-  deleteManagers(){
+  deleteManagers() {
     this.managers = _.difference(this.managers, this.selectedManagers)
     this.setSelectMode(false)
   }
 
-  createNewManager(){
+  createNewManager() {
     this.navCtrl.push(ManagerNewPage);
   }
 

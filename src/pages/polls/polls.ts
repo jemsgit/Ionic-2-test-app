@@ -4,6 +4,7 @@ import { Poll } from '../../models/poll';
 import { PopoverPage } from '../../pages/popover/popover';
 import { PollDetailsPage } from '../poll-details/poll-details';
 import { PollNewPage } from '../poll-new/poll-new';
+import {DataService} from '../../providers/data-service';
 
 /*
   Generated class for the Polls page.
@@ -16,44 +17,20 @@ import { PollNewPage } from '../poll-new/poll-new';
   templateUrl: 'polls.html'
 })
 export class PollsPage {
-   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+  @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   editMode: boolean = false;
   deleteMode: boolean = false;
-  polls: Poll[];
+  loadingFinished: boolean = true;
+  polls: Poll[] = [];
   selectedPolls;
-  constructor(public navCtrl: NavController, private popoverCtrl: PopoverController, public navParams: NavParams) {
-    this.polls = [];
+  constructor(public navCtrl: NavController, private popoverCtrl: PopoverController, public navParams: NavParams, private dataService: DataService) {
     this.selectedPolls = [];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PollsPage');
-    this.polls = [
-      {id: 1, name: '1sdfasdfasdfs', questions: [{ 
-        type: 'text',
-        answer: ' ',
-        value: 'Как вы относитесь к бухачу?',
-        comment: ''
-      }, { 
-        type: 'radio',
-        answer:['1', '2'],
-        value: 'Как вы относитесь к бухачу2?',
-        comment: ''
-      }]
-    },
-    {id: 2, name: '444sdfasdf', questions: [{ 
-        type: 'multiselect',
-        answer: ['1', '2', '3'],
-        value: 'Как вы относитесь к бухачу3?',
-        comment: ''
-      }, { 
-        type: 'multiselect',
-        answer:['1', '2', '3', '4'],
-        value: 'Как вы относитесь к бухачу4?',
-        comment: ''
-      }]
-    }
-    ];
+    let that = this;
+    this.polls = this.dataService.getPolls()
 
     
   }
